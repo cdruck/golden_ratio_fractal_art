@@ -4,6 +4,7 @@ import numpy as np
 MARGIN = 50  # make sure we can print on a normal margin printer
 LENGTH = 297*10
 WIDTH = 210*10
+THICKNESS = 2
 
 
 GOLDEN_RATIO = (1 + 5 ** 0.5) / 2
@@ -55,8 +56,8 @@ def recursive_golden_rectangle(pad, x, y, length, n=0, n_max=4, color="black", d
 
     # base
     square, rect = generate_golden_rectangle(x, y, length, direction=direction)
-    pad.line(square, fill=color, width=5)
-    pad.line(rect, fill=color, width=5)
+    pad.line(square, fill=color, width=THICKNESS)
+    pad.line(rect, fill=color, width=THICKNESS)
 
     archimedes_spiral(pad, square, m=0, m_max=m_max, ratio=abs(arch_dir - 1/GOLDEN_RATIO))
 
@@ -77,7 +78,7 @@ def archimedes_spiral(pad, points, m=0, m_max=4, ratio=1/GOLDEN_RATIO, color='bl
         new_points.append((x1 + (x2 - x1)*ratio, y1 + (y2 - y1)*ratio))
     new_points.append(new_points[0])
 
-    pad.line(points, fill=color, width=5)
+    pad.line(points, fill=color, width=THICKNESS)
 
     m += 1
     archimedes_spiral(pad, new_points, m, m_max, ratio, color)
@@ -108,7 +109,7 @@ def main():
     img, idraw = create_canvas()
     length = LENGTH - 2 * MARGIN
     margin = MARGIN
-    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=10, m_max=10, arch_dir=0)
+    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=10, m_max=20, arch_dir=0)
 
     img.save('golden_fractal.jpg')
 
