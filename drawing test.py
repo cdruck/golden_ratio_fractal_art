@@ -86,7 +86,7 @@ def archimedes_spiral(pad, points, m=0, m_max=4, ratio=1/GOLDEN_RATIO, color='bl
 
 def draw_circle(pad, center, radius, angle_start=0, angle_end=360, color="black"):
     x, y = center
-    pad.arc([x-radius, y-radius, x+radius, y+radius], angle_start, angle_end, fill=color, width=THICKNESS*5)
+    pad.arc([x-radius, y-radius, x+radius, y+radius], angle_start, angle_end, fill=color, width=THICKNESS*3)
 
 
 def distance(xy1, xy2):
