@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6b94732d-98a8-4b3b-aa22-9a1a91899281" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/golden_fractal.jpg" afterPath="$PROJECT_DIR$/golden_fractal.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/drawing test.py" afterPath="$PROJECT_DIR$/drawing test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/golden_fractal_art$drawing_test.coverage" NAME="drawing test Coverage Results" MODIFIED="1570727294760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/golden_fractal_art$drawing_test.coverage" NAME="drawing test Coverage Results" MODIFIED="1570734923018" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
@@ -21,8 +22,8 @@
       <file leaf-file-name="drawing test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/drawing test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="-109">
+              <caret line="88" column="107" lean-forward="false" selection-start-line="88" selection-start-column="107" selection-end-line="88" selection-end-column="107" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -45,6 +46,7 @@
       <find>archimedes_spiral</find>
       <find>print</find>
       <find>generate_golden_rectangle</find>
+      <find>draw_circle</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -371,8 +373,8 @@
     <entry file="file://$PROJECT_DIR$/rectangle.png" />
     <entry file="file://$PROJECT_DIR$/drawing test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="-109">
+          <caret line="88" column="107" lean-forward="false" selection-start-line="88" selection-start-column="107" selection-end-line="88" selection-end-column="107" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>

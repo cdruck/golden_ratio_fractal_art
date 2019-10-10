@@ -21,8 +21,6 @@ def generate_golden_rectangle(x, y, length, direction=0):
 
     width = length / GOLDEN_RATIO
     square = [(x, y), (x + width, y), (x + width, y + width), (x, y + width), (x, y)]
-    spiral = None
-    rect = []
     if direction == 0:
         upleft = square[1]
         rect = [upleft,
@@ -56,8 +54,10 @@ def recursive_golden_rectangle(pad, x, y, length, n=0, n_max=4, color="black", d
 
     # base
     square, rect = generate_golden_rectangle(x, y, length, direction=direction)
+    width = length / GOLDEN_RATIO
     pad.line(square, fill=color, width=THICKNESS)
     pad.line(rect, fill=color, width=THICKNESS)
+    draw_circle(pad, square[(2+direction) % 4], width, 180 + direction*90, 270 + direction*90)
 
     archimedes_spiral(pad, square, m=0, m_max=m_max, ratio=abs(arch_dir - 1/GOLDEN_RATIO))
 
@@ -84,9 +84,15 @@ def archimedes_spiral(pad, points, m=0, m_max=4, ratio=1/GOLDEN_RATIO, color='bl
     archimedes_spiral(pad, new_points, m, m_max, ratio, color)
 
 
-def draw_circle(pad, center, radius):
+def draw_circle(pad, center, radius, angle_start=0, angle_end=360, color="black"):
     x, y = center
-    pad.arc([x-radius, y-radius, x+radius, y+radius], 0, 360, fill="red", width=20)
+    pad.arc([x-radius, y-radius, x+radius, y+radius], angle_start, angle_end, fill=color, width=THICKNESS*5)
+
+
+def distance(xy1, xy2):
+    x1, y1 = xy1
+    x2, y2 = xy2
+    return np.sqrt((x2-x1)**2 + (y2-y1)**2)
 
 
 def translate_point(x, y, tx, ty):
@@ -109,7 +115,7 @@ def main():
     img, idraw = create_canvas()
     length = LENGTH - 2 * MARGIN
     margin = MARGIN
-    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=10, m_max=20, arch_dir=0)
+    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=15, m_max=20, arch_dir=0)
 
     img.save('golden_fractal.jpg')
 
