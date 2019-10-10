@@ -16,29 +16,43 @@ def create_canvas():
     return img, idraw
 
 
-def generate_golden_rectangle(pad: ImageDraw, x, y, length, m_max=4):
+def generate_golden_rectangle(pad: ImageDraw, x, y, length, direction=0, m_max=4):
 
     width = length / GOLDEN_RATIO
     square = [(x, y), (x + width, y), (x + width, y + width), (x, y + width), (x, y)]
-    rect = [(x + width, y), (x + length, y), (x + length, y + width), (x, y + width), (x, y)]
-
+    rect = []
+    if direction == 0:
+        upleft = square[1]
+        rect = [upleft,
+                translate_point(*upleft, length - width, 0),
+                translate_point(*upleft, length - width, width),
+                translate_point(*upleft, 0, width),
+                upleft]
+    elif direction == 1:
+        upleft = square[3]
+        rect = [upleft,
+                translate_point(*upleft, width, 0),
+                translate_point(*upleft, width, length - width),
+                translate_point(*upleft, 0, length - width),
+                upleft]
     return square, rect
 
 
-def recursive_golden_rectangle(pad, x, y, length, n=0, n_max=4, color="black"):
+def recursive_golden_rectangle(pad, x, y, length, n=0, n_max=4, color="black", direction=0, m_max=4, arch_dir=1):
     if n >= n_max:
         return
     n += 1
 
-    print((x, y, length, n, n_max, color))
-
     # base
-    square, rect = generate_golden_rectangle(pad, x, y, length)
+    square, rect = generate_golden_rectangle(pad, x, y, length, direction=direction)
     pad.line(square, fill=color, width=5)
     pad.line(rect, fill=color, width=5)
 
+    archimedes_spiral(pad, square, m=0, m_max=m_max)
+
     # recursion
-    recursive_golden_rectangle(pad, x, y, length / GOLDEN_RATIO, n=n, n_max=n_max, color=color_generator_bw(color))
+    recursive_golden_rectangle(pad, *rect[0], length / GOLDEN_RATIO, direction=(direction + 1) % 2,
+                               n=n, n_max=n_max, color=color_generator_bw(color), m_max=m_max, arch_dir=-1*arch_dir)
 
 
 def archimedes_spiral(pad, points, m=0, m_max=4, ratio=GOLDEN_RATIO, color='black'):
@@ -46,7 +60,7 @@ def archimedes_spiral(pad, points, m=0, m_max=4, ratio=GOLDEN_RATIO, color='blac
     if m >= m_max:
         return
 
-    tx, ty = points[0]
+    #shift = (x2 - x1)/GOLDEN_RATIO
 
     new_points = []
     for i in range(0, 4):
@@ -60,12 +74,17 @@ def archimedes_spiral(pad, points, m=0, m_max=4, ratio=GOLDEN_RATIO, color='blac
     archimedes_spiral(pad, new_points, m, m_max, ratio, color)
 
 
+def draw_circle(pad, center, radius):
+    x, y = center
+    pad.arc([x-radius, y-radius, x+radius, y+radius], 0, 360, fill="red", width=20)
+
+
+def translate_point(x, y, tx, ty):
+    return x + tx, y + ty
+
+
 def translate(points, tx, ty):
-    return [(x - tx, y - ty) for (x, y) in points]
-
-
-def rotate(points, degrees):
-    pass
+    return [translate_point(x, y, tx, ty) for (x, y) in points]
 
 
 def color_generator_bw(color):
@@ -78,13 +97,9 @@ def color_generator_random(*args, **kwargs):
 
 def main():
     img, idraw = create_canvas()
-    length = 1000  # LENGTH - 2 * MARGIN
-    width = length / GOLDEN_RATIO
-    margin = 600
-    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=10)
-
-    initial_square = [(1500, 1500), (1500, 2000), (2000, 2000), (2000, 1500), (1500, 1500)]
-    #archimedes_spiral(idraw, initial_square, m_max=10)
+    length = LENGTH - 2 * MARGIN
+    margin = MARGIN
+    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=10, m_max=20, arch_dir=1)
 
     img.save('golden_fractal.jpg')
 
