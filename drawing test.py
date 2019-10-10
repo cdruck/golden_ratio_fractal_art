@@ -16,10 +16,11 @@ def create_canvas():
     return img, idraw
 
 
-def generate_golden_rectangle(pad: ImageDraw, x, y, length, direction=0, m_max=4):
+def generate_golden_rectangle(x, y, length, direction=0):
 
     width = length / GOLDEN_RATIO
     square = [(x, y), (x + width, y), (x + width, y + width), (x, y + width), (x, y)]
+    spiral = None
     rect = []
     if direction == 0:
         upleft = square[1]
@@ -35,6 +36,15 @@ def generate_golden_rectangle(pad: ImageDraw, x, y, length, direction=0, m_max=4
                 translate_point(*upleft, width, length - width),
                 translate_point(*upleft, 0, length - width),
                 upleft]
+    else:
+        square, rect = generate_golden_rectangle(x, y, length, direction - 2)
+        if direction == 2:
+            square = translate(square, length - width, 0)
+            rect = translate(rect, - width, 0)
+        elif direction == 3:
+            square = translate(square, 0, length - width)
+            rect = translate(rect, 0, - width)
+
     return square, rect
 
 
@@ -44,14 +54,14 @@ def recursive_golden_rectangle(pad, x, y, length, n=0, n_max=4, color="black", d
     n += 1
 
     # base
-    square, rect = generate_golden_rectangle(pad, x, y, length, direction=direction)
+    square, rect = generate_golden_rectangle(x, y, length, direction=direction)
     pad.line(square, fill=color, width=5)
     pad.line(rect, fill=color, width=5)
 
     archimedes_spiral(pad, square, m=0, m_max=m_max, ratio=abs(arch_dir - 1/GOLDEN_RATIO))
 
     # recursion
-    recursive_golden_rectangle(pad, *rect[0], length / GOLDEN_RATIO, direction=(direction + 1) % 2,
+    recursive_golden_rectangle(pad, *rect[0], length / GOLDEN_RATIO, direction=(direction + 1) % 4,
                                n=n, n_max=n_max, color="black", m_max=m_max, arch_dir=(arch_dir + 1) % 2)
 
 
@@ -98,7 +108,7 @@ def main():
     img, idraw = create_canvas()
     length = LENGTH - 2 * MARGIN
     margin = MARGIN
-    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=15, m_max=20, arch_dir=0)
+    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=10, m_max=10, arch_dir=0)
 
     img.save('golden_fractal.jpg')
 
