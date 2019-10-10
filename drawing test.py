@@ -48,26 +48,25 @@ def recursive_golden_rectangle(pad, x, y, length, n=0, n_max=4, color="black", d
     pad.line(square, fill=color, width=5)
     pad.line(rect, fill=color, width=5)
 
-    archimedes_spiral(pad, square, m=0, m_max=m_max)
+    archimedes_spiral(pad, square, m=0, m_max=m_max, ratio=abs(arch_dir - 1/GOLDEN_RATIO))
 
     # recursion
     recursive_golden_rectangle(pad, *rect[0], length / GOLDEN_RATIO, direction=(direction + 1) % 2,
-                               n=n, n_max=n_max, color=color_generator_bw(color), m_max=m_max, arch_dir=-1*arch_dir)
+                               n=n, n_max=n_max, color="black", m_max=m_max, arch_dir=(arch_dir + 1) % 2)
 
 
-def archimedes_spiral(pad, points, m=0, m_max=4, ratio=GOLDEN_RATIO, color='black'):
+def archimedes_spiral(pad, points, m=0, m_max=4, ratio=1/GOLDEN_RATIO, color='black'):
     # points must include 5 points including closure
     if m >= m_max:
         return
-
-    #shift = (x2 - x1)/GOLDEN_RATIO
 
     new_points = []
     for i in range(0, 4):
         (x1, y1) = points[i]
         (x2, y2) = points[i+1]
-        new_points.append((x1 + (x2 - x1)/GOLDEN_RATIO, y1 + (y2 - y1)/GOLDEN_RATIO))
+        new_points.append((x1 + (x2 - x1)*ratio, y1 + (y2 - y1)*ratio))
     new_points.append(new_points[0])
+
     pad.line(points, fill=color, width=5)
 
     m += 1
@@ -99,7 +98,7 @@ def main():
     img, idraw = create_canvas()
     length = LENGTH - 2 * MARGIN
     margin = MARGIN
-    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=10, m_max=20, arch_dir=1)
+    recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=15, m_max=20, arch_dir=0)
 
     img.save('golden_fractal.jpg')
 
