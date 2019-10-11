@@ -1,10 +1,10 @@
 from PIL import Image, ImageDraw, ImageColor
 import numpy as np
 
-MARGIN = 50  # make sure we can print on a normal margin printer
-LENGTH = 297*10
-WIDTH = 210*10
-THICKNESS = 2
+MARGIN = 150  # make sure we can print on a normal margin printer
+LENGTH = 297*30
+WIDTH = 210*30
+THICKNESS = 4
 
 
 GOLDEN_RATIO = (1 + 5 ** 0.5) / 2
@@ -118,6 +118,7 @@ def main():
     recursive_golden_rectangle(idraw, margin, margin, length, color='black', n_max=15, m_max=20, arch_dir=0)
 
     img.save('golden_fractal.jpg')
+    img.save('golden_fractal.png')
 
     img.show()
 
