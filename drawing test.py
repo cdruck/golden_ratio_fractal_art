@@ -5,8 +5,6 @@ MARGIN = 150  # make sure we can print on a normal margin printer
 LENGTH = 297*30
 WIDTH = 210*30
 THICKNESS = 4
-
-
 GOLDEN_RATIO = (1 + 5 ** 0.5) / 2
 
 
